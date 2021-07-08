@@ -10,7 +10,7 @@ import os
 colores = ['blue','red', 'green', ]
 archivo = "data/animacion.txt"
 
-N = 200
+N = 1000
 L = 70
 
 ##############################################################################################
@@ -78,4 +78,4 @@ plt.plot(tiempo,infected)
 plt.plot(tiempo,refractary)
 plt.show()
 
-trayectoria(0.01,True)
+#trayectoria(0.01,True)

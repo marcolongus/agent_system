@@ -1,6 +1,6 @@
 //Parametros principales:
-const int    N = 200; //Cantidad de agentes.
-const double L = 70; //Largo del sistema. Area = L*L.
+const int    N = 1000; //Cantidad de agentes.
+const double L = 150; //Largo del sistema. Area = L*L.
 
 
 //Parametros de evolución del sistema.
@@ -18,7 +18,7 @@ const double p_init  = 0.1, //Infectadas iniciales.
 
 const int spin = 3; //Estados internos.
 
-const bool animation = true;
+const bool animation = false;
 const int  anim_step = 5;
 
 /*Tiempos característicos y probabilidades por unidad de tiempo*/
@@ -37,7 +37,7 @@ const double k_powerl = 2.09500,            // v=0.05,
              v_max    = 4.;
 
 //Constantes:
-const double Pi       = 3.14159265358979323846,
+const double  Pi       = 3.14159265358979323846,
 			 dos_Pi   = 2*Pi,
 			 infinity = 1000000000;
 

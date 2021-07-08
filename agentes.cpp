@@ -27,7 +27,8 @@ using namespace std;
 
 int main(void){
 
-	cout << "Memoria del sistema: " << 2*36*N << " Bytes" << endl;
+	cout << "Memoria del sistema: " << 4*8*2*N << " Bytes" << endl;
+	cout << "Memoria del sistema: " << 4*8*2*N/1000 << " Kb" << endl;
 	cout << "seed: " << seed << endl << endl;
 	int start_s = clock();
 	/*DEFINICIÓN DE ARCHIVOS DE SALIDA DEL PROGRAMA*/
@@ -39,7 +40,7 @@ int main(void){
 	//Red compleja:
 	//Comentario sobre cómo está guardada esta información.
 	ofstream topology   ("data/topology.txt") ; //Se guarda la red compleja.
-
+	double updates = 0; //puntos por segundo: pps
 	for (int n_simulaciones = 0; n_simulaciones < 1; n_simulaciones++){
 		gen.seed(seed);
 		cout << "--------------------------------------------------------"   << endl;
@@ -157,7 +158,7 @@ int main(void){
 			}//cirra el for p set.
 			system = system_new;
 		}//while
-
+		updates = (double)TimeStep;
 		/*ESCRITURA DE RESULTADOS*/
 		cout << endl;
 		cout << "--------------------" << endl;
@@ -167,8 +168,8 @@ int main(void){
 		cout << endl;
 	}
 	int stop_s = clock();
-	cout << "Time[min]: " << (((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000)/60 << endl;
-
+	cout << "Time[seg]   : " << (((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000) << endl;
+	cout << "Metrica[pps]: " << updates*(double)N/(((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000) << endl;
 	//Cerramos los archivos:
 	FinalState.close();
 	epidemic.close();
