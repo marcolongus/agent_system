@@ -30,17 +30,16 @@ int main(void){
 	cout << "Memoria del sistema: " << 4*8*2*N << " Bytes" << endl;
 	cout << "Memoria del sistema: " << 4*8*2*N/1000 << " Kb" << endl;
 	cout << "seed: " << seed << endl << endl;
-	int start_s = clock();
 	/*DEFINICIÓN DE ARCHIVOS DE SALIDA DEL PROGRAMA*/
 	//Para modelado de epidemias:
 	ofstream FinalState ("data/evolution.txt");
 	ofstream epidemic   ("data/epidemia.txt") ;//Estado de la epidemia en cada instante modulo m.
 	ofstream anim       ("data/animacion.txt");
-	ofstream imax       ("data/imax.txt")     ;//Máxima cantidad de infectados.
 	//Red compleja:
 	//Comentario sobre cómo está guardada esta información.
-	ofstream topology   ("data/topology.txt") ; //Se guarda la red compleja.
+	ofstream metrica   ("data/metrica.txt") ; 
 	double updates = 0; //puntos por segundo: pps
+	int start_s = clock();
 	for (int n_simulaciones = 0; n_simulaciones < 1; n_simulaciones++){
 		gen.seed(seed);
 		cout << "--------------------------------------------------------"   << endl;
@@ -103,7 +102,7 @@ int main(void){
 		/*EVOLUCIÓN DEL SISTEMA*/
 		int TimeStep   = 0; //Contador de tiempo.
 		system_new.resize(system.size());
-		while (state_vector[1] > 0){
+		while ((state_vector[1] > 0) and (TimeStep < 100000)){
 			if (TimeStep % 100 == 0){
 				epidemic << state_vector[0] << " ";
 				epidemic << state_vector[1] << " ";
@@ -112,8 +111,10 @@ int main(void){
 			}
 			if (TimeStep%10000 ==0) printf("Time: %0.f\n", (double)TimeStep*delta_time);;
 			TimeStep ++;
+
 			state_vector = {0,0,0};
-			#pragma omp parallel for
+			int healthy=0, infected=0, refract=0;
+			#pragma omp parallel for reduction(+:healthy,infected,refract) num_threads(12)
 			for (int p=0; p<N; p++){
 				vector<int> index;
 				index.push_back(p);
@@ -133,8 +134,19 @@ int main(void){
 				} //for m, l
 				/*fin de chequeo de interacciones*/
 				system_new[p] = evolution(system, index, inter[p]);
-				state_vector[system_new[p].get_state()]++;
+				switch(system_new[p].get_state()){
+					case(0):
+						healthy++;
+						break;
+					case(1):
+						infected++;
+						break;
+					default:
+						refract++;
+						break;
+				}
 			}//for p
+			state_vector = {healthy,infected,refract};
 			//Animacion:
 			if (animation and TimeStep % anim_step == 0){
 				forn(p,0,system_new.size()){
@@ -168,14 +180,14 @@ int main(void){
 		cout << endl;
 	}
 	int stop_s = clock();
-	cout << "Time[seg]   : " << (((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000) << endl;
-	cout << "Metrica[pps]: " << updates*(double)N/(((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000) << endl;
+	cout     << "Time[seg]   : " << (((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000) << endl;
+	cout     << "Metrica[pps]: " << updates*(double)N/(((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000) << endl;
+	metrica  << updates*(double)N/(((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000) << endl;
 	//Cerramos los archivos:
 	FinalState.close();
 	epidemic.close();
 	anim.close();
-	imax.close();
-	topology.close();
+	metrica.close();
 
 	return 0;
 }

@@ -5,8 +5,8 @@ from sys import argv
 compiler   = "gcc -o "
 target     = "agentes_test "
 program    = "agentes.cpp "
-flags      = "-lstdc++ -pedantic-errors " # -Wall " #-Werrors
-opt_flags  = "-O3 -march=native -fopenmp "
+flags      = "-lstdc++ " # -Wall " #-Werrors
+opt_flags  = "-O3 -march=native -fopenmp"
 
 compilacion =compiler + target + program + flags + opt_flags
 print(compilacion)

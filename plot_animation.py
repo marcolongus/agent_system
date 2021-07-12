@@ -10,7 +10,7 @@ import os
 colores = ['blue','red', 'green', ]
 archivo = "data/animacion.txt"
 
-N = 1000
+N = 10000
 L = 70
 
 ##############################################################################################
@@ -71,11 +71,12 @@ tiempo     = np.loadtxt(data, usecols=3)
 plt.xlabel("Time")
 plt.ylabel("Population")
 
-plt.ylim(0, N)
+plt.ylim(0, N+100)
 plt.xlim(0, tiempo.max()+10)
 plt.plot(tiempo,healthy)
 plt.plot(tiempo,infected)
 plt.plot(tiempo,refractary)
+plt.plot(tiempo,refractary+infected+healthy)
 plt.show()
 
 #trayectoria(0.01,True)

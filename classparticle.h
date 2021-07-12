@@ -79,6 +79,7 @@ particle create_particle(void){
 			break;
 		default:
 			velocity = active_velocity;
+			break;
 	}
 	//Creación de la partícula:
 	particle A(x,y,velocity,angle);
@@ -231,7 +232,7 @@ particle evolution(vector<particle> &system, vector<int> &index, bool inter){
 			}
 		}
 	}//for
-    //if (Agent.is_refractary() && (dis(gen) < p_recfractary) ) Agent.set_healthy(); //SIRS
+    if (Agent.is_refractary() && (dis(gen) < p_recfractary) ) Agent.set_healthy(); //SIRS
     if (Agent.is_infected() && flag && (dis(gen) < p_infection) ) Agent.set_refractary();
     return Agent;
 }
