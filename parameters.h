@@ -2,7 +2,7 @@
 
 //Parametros principales:
 const int    N = 1000; //Cantidad de agentes.
-const KIND   L = 450; //Largo del sistema. Area = L*L.
+const KIND   L = 150; //Largo del sistema. Area = L*L.
 
 
 //Parametros de evolución del sistema.

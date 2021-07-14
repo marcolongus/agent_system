@@ -1,5 +1,8 @@
 import os
 from sys import argv
+from termcolor import colored,cprint
+import os
+os.system('color')
 
 #compilacion = "gcc -o agentes_test agentes.cpp -lstdc++ -O3 -march=native -fopenmp"
 compiler   = "gcc -o "
@@ -9,7 +12,7 @@ flags      = "-lstdc++ " # -Wall " #-Werrors
 opt_flags  = "-O3 -march=native -fopenmp"
 
 compilacion =compiler + target + program + flags + opt_flags
-print(compilacion)
+cprint(compilacion, 'green')
 
 flush = "del "+"agentes_test.exe"
 
