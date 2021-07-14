@@ -170,7 +170,7 @@ int main(void){
 			}//cirra el for p set.
 			system = system_new;
 		}//while
-		updates = (double)TimeStep;
+		updates += (double)TimeStep;
 		/*ESCRITURA DE RESULTADOS*/
 		cout << endl;
 		cout << "--------------------" << endl;
@@ -178,7 +178,7 @@ int main(void){
 		cout << "--------------------" << endl;
 		print_state(state_vector);
 		cout << endl;
-	}
+	}//for simul
 	int stop_s = clock();
 	cout     << "Time[seg]   : " << (((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000) << endl;
 	cout     << "Metrica[pps]: " << updates*(double)N/(((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000) << endl;
