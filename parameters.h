@@ -1,8 +1,8 @@
 #define KIND float
 
 //Parametros principales:
-const int    N = 10000; //Cantidad de agentes.
-const KIND   L = 470; //Largo del sistema. Area = L*L.
+const int    N = 1000; //Cantidad de agentes.
+const KIND   L = 150; //Largo del sistema. Area = L*L.
 
 
 //Parametros de evolución del sistema.

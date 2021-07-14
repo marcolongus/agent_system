@@ -23,7 +23,11 @@
 #include "classparticle.h" //Módulo con la clase definida para los agentes.
 
 #define forn(i,a,b) for(int i=a; i<b; i++)
+
 using namespace std;
+
+void init_system(vector<particle> &system, vector<int> &state_vector, vector<vector<set<int>>> &box);
+
 
 int main(void){
 
@@ -46,6 +50,7 @@ int main(void){
 		cout << "Simulacion: " << n_simulaciones << endl;
 		cout << "--------------------------------------------------------"   << endl;
 		cout << endl;
+
 		/*DECLARACIÓN DE VARIABLES*/
 		vector<particle> system    ,
 						 system_new;
@@ -69,35 +74,9 @@ int main(void){
 		box.resize(num_boxes);
 		for (int i=0; i<box.size(); i++) box[i].resize(num_boxes);
 
-
 		/*CONDICIÓN INICIAL*/
-		for(int p = 0; p < N; p++){
-			particle Agent;
-			bool accepted = false;
-			while(!accepted){
-				accepted = true;
-				Agent = create_particle();
-				int i_index = floor(Agent.x),
-					j_index = floor(Agent.y);
-				//Si interactúa con otra partícula cambiamos la condición a no aceptada.
-				forn(l,-2,3){
-					forn(m,-2,3){
-						int i = b_condition(i_index + l),
-							j = b_condition(j_index + m);
-						if (!box[i][j].empty()){
-							for (auto element: box[i][j]){
-								if (interact(Agent,system[element])) accepted = false;
-							}//for auto
-						}//if not empty
-					}//for m
-				}//for l
-				if (accepted) box[i_index][j_index].insert(p);
-			}//while
-			system.push_back(Agent);
-			state_vector[Agent.get_state()]++;
-		}//for N
+		init_system(system, state_vector, box);
 		print_state(state_vector);
-
 
 		/*EVOLUCIÓN DEL SISTEMA*/
 		int TimeStep   = 0; //Contador de tiempo.
@@ -191,4 +170,33 @@ int main(void){
 	metrica.close();
 
 	return 0;
+}
+
+
+void init_system(vector<particle> &system, vector<int> &state_vector, vector<vector<set<int>>> &box){
+	for(int p = 0; p < N; p++){
+		particle Agent;
+		bool accepted = false;
+		while(!accepted){
+			accepted = true;
+			Agent = create_particle();
+			int i_index = floor(Agent.x),
+				j_index = floor(Agent.y);
+				//Si interactúa con otra partícula cambiamos la condición a no aceptada.
+			forn(l,-2,3){
+				forn(m,-2,3){
+					int i = b_condition(i_index + l),
+						j = b_condition(j_index + m);
+					if (!box[i][j].empty()){
+						for (auto element: box[i][j]){
+							if (interact(Agent,system[element])) accepted = false;
+						}//for auto
+					}//if not empty
+				}//for m
+			}//for l
+			if (accepted) box[i_index][j_index].insert(p);
+		}//while
+		system.push_back(Agent);
+		state_vector[Agent.get_state()]++;
+	}//for N	
 }
