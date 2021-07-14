@@ -9,7 +9,7 @@ compiler   = "gcc -o "
 target     = "agentes_test "
 program    = "agentes.cpp "
 flags      = "-lstdc++ " # -Wall " #-Werrors
-opt_flags  = "-O3 -march=native -fopenmp"
+opt_flags  = "-O3 -march=native -fopenmp "
 
 compilacion =compiler + target + program + flags + opt_flags
 cprint(compilacion, 'green')

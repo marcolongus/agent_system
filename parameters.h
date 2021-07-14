@@ -1,4 +1,4 @@
-#define KIND float
+#define KIND double
 
 //Parametros principales:
 const int    N = 1000; //Cantidad de agentes.

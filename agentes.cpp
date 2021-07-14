@@ -99,7 +99,7 @@ int main(void){
 
 			state_vector = {0,0,0};
 			int healthy=0, infected=0, refract=0;
-			#pragma omp parallel for reduction(+:healthy,infected,refract) num_threads(12)
+			#pragma omp parallel for schedule(guided) reduction(+:healthy,infected,refract) num_threads(12)
 			for (int p=0; p<N; p++){
 				vector<int> index;
 				index.push_back(p);
