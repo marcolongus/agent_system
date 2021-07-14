@@ -10,8 +10,8 @@ import os
 colores = ['blue','red', 'green', ]
 archivo = "data/animacion.txt"
 
-N = 1000
-L = 70
+N = 50
+L = 20
 
 ##############################################################################################
 #Animacion
@@ -44,12 +44,11 @@ def trayectoria(tpause = 0.01, animation = False):
 			circ = patches.Circle((x[j],y[j]), 1, alpha=0.7, fc= colores[estado[j]])
 			ax.add_patch(circ)
 
-		plt.savefig("video/pic%.4i.png" %(i),dpi=150)
+		plt.savefig("video/pic%.4i.png" %(i),dpi=100)
 		#plt.pause(tpause)
 
 	if animation:
-
-		path = "C:/Users/Admin/Desktop/agente_system/video"
+		path = "C:/Users/Admin/Desktop/agent_system/video"
 		print(os.getcwd())
 		os.chdir(path)
 		print(os.getcwd())
@@ -71,7 +70,7 @@ tiempo     = np.loadtxt(data, usecols=3)
 plt.xlabel("Time")
 plt.ylabel("Population")
 
-plt.ylim(0, N+100)
+plt.ylim(0, N+10)
 plt.xlim(0, tiempo.max()+10)
 plt.plot(tiempo,healthy)
 plt.plot(tiempo,infected)
@@ -79,4 +78,4 @@ plt.plot(tiempo,refractary)
 plt.plot(tiempo,refractary+infected+healthy)
 plt.show()
 
-#trayectoria(0.01,True)
+trayectoria(0.01,False)

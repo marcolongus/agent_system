@@ -14,7 +14,7 @@
  *		iV.  El estado interno puede evolucionar en el tiempo.
  *			  1. Esta dinámica está regulada, genéricamente, con una distribución de poisson.
  *---------------------------------------------------------------------------------------------------------
- * Red compleja:
+ * Red compleja: falta programar
  *			i.  El programa trackea todo el sistema de interacciones y guarda la red compleja resultante.
  *			ii. La red compleja puede ser la asociada a la propagación del estado interno o la de contactos
  *---------------------------------------------------------------------------------------------------------
@@ -30,10 +30,11 @@ void init_system(vector<particle> &system, vector<int> &state_vector, vector<vec
 
 
 int main(void){
-
-	cout << "Memoria del sistema: " << 4*8*2*N << " Bytes" << endl;
-	cout << "Memoria del sistema: " << 4*8*2*N/1000 << " Kb" << endl;
 	cout << "seed: " << seed << endl << endl;
+	int system_memory = 2*(5*sizeof(KIND)*N);  
+	cout << "Memoria del sistema      : " << system_memory                 << " Bytes" << endl;
+	cout << "Memoria del sistema      : " << (float)system_memory/1000000. << " MB" << endl;  
+	
 	/*DEFINICIÓN DE ARCHIVOS DE SALIDA DEL PROGRAMA*/
 	//Para modelado de epidemias:
 	ofstream FinalState ("data/evolution.txt");
@@ -46,36 +47,41 @@ int main(void){
 	int start_s = clock();
 	for (int n_simulaciones = 0; n_simulaciones < 1; n_simulaciones++){
 		gen.seed(seed);
-		cout << "--------------------------------------------------------"   << endl;
-		cout << "Simulacion: " << n_simulaciones << endl;
-		cout << "--------------------------------------------------------"   << endl;
-		cout << endl;
 
 		/*DECLARACIÓN DE VARIABLES*/
 		vector<particle> system    ,
 						 system_new;
-
 		vector<bool>     inter;        //Flag de interacción.
 		vector<int>      state_vector; //En cada lugar contiene la población de cada estado.
 		/*Estuctura de datos para optimizar la búsqueda de interacciones entre agentes:
 		 *	1. Utiliza un red-and-black tree implementado en c++ como set.
 		 *	2. Cada agente está indexado por un int que representa su posición en
 		 *	   los vectores system y system_new.
-		 *	3. Se construye una grilla con cuadrículas de tamaño 1 y cada a una se le asigna un set.
+		 *	3. Se construye una grilla con cuadrículas de tamaño 1x1 y cada a una se le asigna un set.
 		 *	4. Cada set contiene los agentes que están en cada cuadrícula.
 		 */
 		vector<vector<set<int>>> box;
 		int num_boxes = floor(L);
-
 		//Inicializamos los vectores declarados previamente:
 		inter.resize(N,false);
 		state_vector.resize(spin,0);
-
 		box.resize(num_boxes);
 		for (int i=0; i<box.size(); i++) box[i].resize(num_boxes);
 
 		/*CONDICIÓN INICIAL*/
 		init_system(system, state_vector, box);
+		
+		cout << "Memoria de una particula : " << sizeof(system[0])                     <<" Bytes" << endl;
+		cout << "Memoria de un box        : " << sizeof(box[0][0])                     <<" Bytes" << endl;
+		cout << "Memoria del espacio      : " << (float)L*L*sizeof(box[0][0])/1000000. << " Mb" << endl;
+		printf( "Memoria total            : %f", (float)system_memory/1000000. + (float)(L*L*sizeof(box[0][0])/1000000.));
+		cout  << " Mb" << endl;
+
+		cout << "--------------------------------------------------------"   << endl;
+		cout << "Simulacion: " << n_simulaciones << endl;
+		cout << "--------------------------------------------------------"   << endl;
+		cout << endl;
+
 		print_state(state_vector);
 
 		/*EVOLUCIÓN DEL SISTEMA*/
