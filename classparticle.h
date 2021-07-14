@@ -4,7 +4,7 @@ using namespace std;
 //Generador de números aleatorios en (0,1).
 mt19937::result_type seed = 1615996332;
 mt19937 gen(seed);                             //Standard mersenne_twister_engine seeded time(0)
-uniform_real_distribution<double> dis(0., 1.); // dis(gen), número aleatorio real entre 0 y 1.
+uniform_real_distribution<KIND> dis(0., 1.); // dis(gen), número aleatorio real entre 0 y 1.
 
 /*Definimos la clase partículas y sus métodos */
 /*Memoria que ocupa cada miembro de la clase: 4 doubbles (32 Bytes) + 1 int (4 Bytes) = 36 Bytes*/
@@ -15,13 +15,13 @@ class particle{
 		int state;
 	public:
 		//Estado dinámico del agente.
-		double x,y;
-		double velocity;
-		double angle;
+		KIND x,y;
+		KIND velocity;
+		KIND angle;
 
 	//Constuctores:
 	particle();
-	particle(double x1, double y1, double vel, double ang);
+	particle(KIND x1, KIND y1, KIND vel, KIND ang);
 
 	//Métodos:
 	bool is_healthy()    {return (state <  1);}
@@ -48,7 +48,7 @@ particle::particle(){
 }
 
 /*Constructor of a particle in a given phase-state (x,p) of the system */
-particle::particle(double x1, double y1, double vel, double ang){
+particle::particle(KIND x1, KIND y1, KIND vel, KIND ang){
 	velocity = vel;
 	angle    = ang;
 	x        = x1;
@@ -63,7 +63,7 @@ particle::particle(double x1, double y1, double vel, double ang){
  * @return  [particle]
  */
 particle create_particle(void){
-	double x,y,velocity,angle;
+	KIND x,y,velocity,angle;
 
 	x     = dis(gen)*L;
 	y     = dis(gen)*L;
@@ -95,7 +95,7 @@ particle create_particle(void){
 
 /*FUNCIONES AUXILIARES PARA LA CLASE*/
 /*Real boundary condition  and integer boundary condition functions*/
-double b_condition(double a){
+KIND b_condition(KIND a){
     return fmod((fmod(a,L)+L),L);
 }
 
@@ -107,16 +107,16 @@ int my_mod(int a, int b){
  * [Distance between particles in a topological torus]
  * @param  A [particle]
  * @param  B [particle]
- * @return   [double distance between A and B]
+ * @return   [KIND distance between A and B]
  */
-double distance(particle A, particle B){
-        double x1,x2,y1,y2,res;
+KIND distance(particle A, particle B){
+        KIND x1,x2,y1,y2,res;
         res = infinity;
         x2 = B.x; y2 = B.y;
         for(int i=-1;i<2;i++) for(int j=-1;j<2;j++){
             x1 = A.x + i*L;
             y1 = A.y + j*L;
-            res = min(res, pow((x1-x2),2) + pow((y1-y2),2));
+            res = min(res, (KIND)pow((x1-x2),2) + (KIND)pow((y1-y2),2));
         }
         return sqrt(res);
 }
@@ -125,12 +125,12 @@ double distance(particle A, particle B){
  * [distance_x difference between coordinates of two particles]
  * @param  A [particle]
  * @param  B [particle]
- * @return   [double]
+ * @return   [KIND]
  */
-double distance_x(particle A, particle B){
-		double x1, x2, res;
+KIND distance_x(particle A, particle B){
+		KIND x1, x2, res;
 		int j = 0;
-		vector<double> dx;
+		vector<KIND> dx;
 
 		dx.resize(3,0);
 		res = infinity;
@@ -152,12 +152,12 @@ double distance_x(particle A, particle B){
  * [distance_y same as distance_x]
  * @param  A [particle]
  * @param  B [particle]
- * @return   [double]
+ * @return   [KIND]
  */
-double distance_y(particle A, particle B){
-		double y1, y2, res;
+KIND distance_y(particle A, particle B){
+		KIND y1, y2, res;
 		int j = 0;
-		vector<double> dy;
+		vector<KIND> dy;
 
 		dy.resize(3,0);
 		res = infinity;
@@ -174,7 +174,7 @@ double distance_y(particle A, particle B){
 		return dy[j+1];
 }
 
-double distance1(double dx, double dy){
+KIND distance1(KIND dx, KIND dy){
     return sqrt(pow(dx,2) + pow(dy,2));
 }
 
@@ -193,11 +193,11 @@ particle evolution(vector<particle> &system, vector<int> &index, bool inter){
 	particle Agent = system[index[0]];
 	/* DINÁMICA ESPACIAL DEL SISTEMA*/
 	if (inter){
-		vector<double> field, potencial;
+		vector<KIND> field, potencial;
 		field.resize(2); potencial.resize(2,0); //inicia vector tamaño 2 en 0.
 
 		for(int i=1; i < index.size(); i++){
-			double dx_0i = distance_x(system[index[0]], system[index[i]]),
+			KIND dx_0i = distance_x(system[index[0]], system[index[i]]),
 				   dy_0i = distance_y(system[index[0]], system[index[i]]),
 				   d_0i  = distance1(dx_0i, dy_0i);
 			potencial[0] += pow(d_0i,-3)*dx_0i;
@@ -218,7 +218,7 @@ particle evolution(vector<particle> &system, vector<int> &index, bool inter){
 	}//else
 	/*El agente cambia de dirección en A.angle +/- pi/2*/
 	if (dis(gen) < p_rotation){
-		double ruido = (dis(gen)-0.5)*Pi;
+		KIND ruido = (dis(gen)-0.5)*Pi;
 		Agent.angle += ruido;
 	}
 

@@ -37,8 +37,8 @@ int main(void){
 	ofstream anim       ("data/animacion.txt");
 	//Red compleja:
 	//Comentario sobre cómo está guardada esta información.
-	ofstream metrica   ("data/metrica.txt") ; 
-	double updates = 0; //puntos por segundo: pps
+	ofstream metrica   ("data/metrica.txt", ios_base::app) ; 
+	float updates = 0; //puntos por segundo: pps
 	int start_s = clock();
 	for (int n_simulaciones = 0; n_simulaciones < 1; n_simulaciones++){
 		gen.seed(seed);
@@ -102,7 +102,7 @@ int main(void){
 		/*EVOLUCIÓN DEL SISTEMA*/
 		int TimeStep   = 0; //Contador de tiempo.
 		system_new.resize(system.size());
-		while ((state_vector[1] > 0) and (TimeStep < 100000)){
+		while ((state_vector[1] > 0) and (TimeStep < 100000/2)){
 			if (TimeStep % 100 == 0){
 				epidemic << state_vector[0] << " ";
 				epidemic << state_vector[1] << " ";
@@ -170,7 +170,7 @@ int main(void){
 			}//cirra el for p set.
 			system = system_new;
 		}//while
-		updates += (double)TimeStep;
+		updates += (float)TimeStep;
 		/*ESCRITURA DE RESULTADOS*/
 		cout << endl;
 		cout << "--------------------" << endl;
@@ -180,9 +180,10 @@ int main(void){
 		cout << endl;
 	}//for simul
 	int stop_s = clock();
-	cout     << "Time[seg]   : " << (((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000) << endl;
-	cout     << "Metrica[pps]: " << updates*(double)N/(((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000) << endl;
-	metrica  << updates*(double)N/(((stop_s-start_s)/double(CLOCKS_PER_SEC)*1000)/1000) << endl;
+	cout     << "Time[seg]   : " << (((stop_s-start_s)/float(CLOCKS_PER_SEC)*1000)/1000) << endl;
+	cout     << "Metrica[pps]: " << updates*(float)N/(((stop_s-start_s)/float(CLOCKS_PER_SEC)*1000)/1000) << endl;
+	metrica  << updates*(float)N/(((stop_s-start_s)/float(CLOCKS_PER_SEC)*1000)/1000) << endl;
+
 	//Cerramos los archivos:
 	FinalState.close();
 	epidemic.close();
