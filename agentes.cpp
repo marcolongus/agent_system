@@ -139,12 +139,13 @@ int main(void){
 				}
 			}//if animacion
 			/*Estabilzamos el set*/
+
 			for(size_t p=0; p<N; p++){
 				int i_new = floor(system_new[p].x),
 					j_new = floor(system_new[p].y);
 				int i_old = floor(system[p].x),
 					j_old = floor(system[p].y);
-				
+
 				if (box[i_new][j_new].find(p) == box[i_new][j_new].end()){
 					box[i_old][j_old].erase(p);
 					box[i_new][j_new].insert(p);
