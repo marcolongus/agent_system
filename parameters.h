@@ -20,7 +20,7 @@ const KIND   p_init  = 0.1, //Infectadas iniciales.
 
 const int spin = 3; //Estados internos.
 
-const bool animation = false;
+const bool animation = true;
 const int  anim_step = 5;
 
 /*Tiempos característicos y probabilidades por unidad de tiempo*/
