@@ -163,9 +163,13 @@ int main(void){
 		cout << endl;
 	}//for simul
 	int stop_s = clock();
-	cout     << "Time[seg]   : " << (((stop_s-start_s)/float(CLOCKS_PER_SEC)*1000)/1000) << endl;
-	cout     << "Metrica[pps]: " << updates*(float)N/(((stop_s-start_s)/float(CLOCKS_PER_SEC)*1000)/1000) << endl;
-	metrica  << updates*(float)N/(((stop_s-start_s)/float(CLOCKS_PER_SEC)*1000)/1000) << endl;
+	float cps = (float)CLOCKS_PER_SEC*12;
+	float time_elapsed = float(stop_s - start_s)/cps;
+
+	cout     << "Time[seg]   : " << time_elapsed                  << endl;
+	cout     << "Metrica[pps]: " << updates*(float)N/time_elapsed << endl;
+	
+	metrica  << updates*(float)N/time_elapsed << endl;
 
 	//Cerramos los archivos:
 	FinalState.close();

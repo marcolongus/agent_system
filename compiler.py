@@ -8,13 +8,13 @@ os.system('color')
 compiler   = "gcc -o "
 target     = "agentes_test "
 program    = "agentes.cpp "
-flags      = "-lstdc++ " # -Wall " #-Werrors
+flags      = "-lstdc++ -lm " # -Wall " #-Werrors
 opt_flags  = "-O3 -march=native -fopenmp "
 
 compilacion =compiler + target + program + flags + opt_flags
 cprint(compilacion, 'green')
 
-flush = "del "+"agentes_test.exe"
+flush = "rm "+"agentes_test"
 
 os.system("%s" %compilacion)
 try:
