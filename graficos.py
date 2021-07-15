@@ -34,3 +34,9 @@ plt.plot(system_memory_double,size_memory, label="double")
 plt.legend()
 plt.show()
 
+metrica = 6e06
+delta_t = 0.1
+tiempo  = 10000
+sistema = 1000000
+timepo_simulacion = (tiempo/delta_t)*sistema/metrica
+print("tiempo de simulacion %1f" %(timepo_simulacion/3600.))

@@ -196,15 +196,15 @@ particle evolution(vector<particle> &system, vector<int> &index, bool inter){
 		vector<KIND> field, potencial;
 		field.resize(2); potencial.resize(2,0); //inicia vector tamaño 2 en 0.
 
-		for(int i=1; i < index.size(); i++){
-			KIND dx_0i = distance_x(system[index[0]], system[index[i]]),
+		for(size_t i=1; i < index.size(); i++){
+			KIND   dx_0i = distance_x(system[index[0]], system[index[i]]),
 				   dy_0i = distance_y(system[index[0]], system[index[i]]),
 				   d_0i  = distance1(dx_0i, dy_0i);
 			potencial[0] += pow(d_0i,-3)*dx_0i;
 			potencial[1] += pow(d_0i,-3)*dy_0i;
 
 		}//for
-	    for(int i=0; i<potencial.size(); i++) potencial[i] = gamma_friction*potencial[i];
+	    for(size_t i=0; i<potencial.size(); i++) potencial[i] = gamma_friction*potencial[i];
 
     	field[0] = system[index[0]].velocity*cos(system[index[0]].angle) + potencial[0];
     	field[1] = system[index[0]].velocity*sin(system[index[0]].angle) + potencial[1];
@@ -224,7 +224,7 @@ particle evolution(vector<particle> &system, vector<int> &index, bool inter){
 
     /*DINÁMICA DE LA EPIDEMIA*/
 	bool flag = true; //Flag de infección.
-	for (int i=1; i<index.size(); i++){
+	for (size_t i=1; i<index.size(); i++){
 		if (Agent.is_healthy() && system[index[i]].is_infected()){
 			if (dis(gen) < p_transmision){
 				Agent.set_infected();
@@ -237,7 +237,7 @@ particle evolution(vector<particle> &system, vector<int> &index, bool inter){
     return Agent;
 }
 /***************************************************************************************/
-void print_state(vector<int> state_vector){
+void print_state(vector<size_t> state_vector){
 		cout << "Healthy   : " << state_vector[0] << endl;
 		cout << "Infected  : " << state_vector[1] << endl;
 		cout << "Refractary: " << state_vector[2] << endl << endl;
