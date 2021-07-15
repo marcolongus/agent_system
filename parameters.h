@@ -1,9 +1,10 @@
+#pragma once
+
 #define KIND float
 
 //Parametros principales:
 const size_t N = 1000; //Cantidad de agentes.
 const KIND   L = 150; //Largo del sistema. Area = L*L.
-
 
 //Parametros de evolución del sistema.
 //Pre-condición para estos parámetros (dt*v<0.1):
