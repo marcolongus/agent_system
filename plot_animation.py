@@ -10,8 +10,8 @@ import os
 colores = ['blue','red', 'green', ]
 archivo = "data/animacion.txt"
 
-N = 10000
-L = 70
+N = 20
+L = 11
 
 ##############################################################################################
 #Animacion
@@ -44,16 +44,15 @@ def trayectoria(tpause = 0.01, animation = False):
 			circ = patches.Circle((x[j],y[j]), 1, alpha=0.7, fc= colores[estado[j]])
 			ax.add_patch(circ)
 
-		plt.savefig("video/pic%.4i.png" %(i),dpi=150)
+		plt.savefig("video/pic%.4i.png" %(i),dpi=70)
 		#plt.pause(tpause)
 
 	if animation:
-
-		path = "C:/Users/Admin/Desktop/agente_system/video"
+		path = "C:/Users/Admin/Desktop/agent_system/video"
 		print(os.getcwd())
 		os.chdir(path)
 		print(os.getcwd())
-		os.system('cmd /k "ffmpeg -r 30 -f image2 -s 1920x1080 -i pic%04d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p test_0.mp4"')
+		os.system('cmd /k "ffmpeg -r 30 -f image2 -s 1920x1080 -i pic%04d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p test2.mp4"')
 
 ####################################################################
 ####################################################################
@@ -71,7 +70,7 @@ tiempo     = np.loadtxt(data, usecols=3)
 plt.xlabel("Time")
 plt.ylabel("Population")
 
-plt.ylim(0, N+100)
+plt.ylim(0, N+0.1*N)
 plt.xlim(0, tiempo.max()+10)
 plt.plot(tiempo,healthy)
 plt.plot(tiempo,infected)
@@ -79,4 +78,4 @@ plt.plot(tiempo,refractary)
 plt.plot(tiempo,refractary+infected+healthy)
 plt.show()
 
-#trayectoria(0.01,True)
+trayectoria(0.01,False)
