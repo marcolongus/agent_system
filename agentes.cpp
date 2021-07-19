@@ -43,12 +43,10 @@ int main(void){
 	/*SIMULACION*/
 	for (size_t n_simulaciones = 0; n_simulaciones < 1; n_simulaciones++){
 		gen.seed(seed); //cada simulacion tiene su propia semilla. 
-		
 		print_header(n_simulaciones);
 
 		/*DECLARACIÓN DE VARIABLES*/
-		vector<particle> system    ,
-						 system_new;
+		vector<particle> system, system_new;
 		vector<bool>     inter;        //Flag de interacción.
 		vector<size_t>   state_vector; //En cada lugar contiene la población de cada estado.
 		
