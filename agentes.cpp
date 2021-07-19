@@ -42,12 +42,9 @@ int main(void){
 
 	/*SIMULACION*/
 	for (size_t n_simulaciones = 0; n_simulaciones < 1; n_simulaciones++){
-		gen.seed(seed);
+		gen.seed(seed); //cada simulacion tiene su propia semilla. 
 		
-		cout << "--------------------------------------------------------"   << endl;
-		cout << "Simulacion: " << n_simulaciones << endl;
-		cout << "--------------------------------------------------------"   << endl;
-		cout << endl;
+		print_header(n_simulaciones);
 
 		/*DECLARACIÓN DE VARIABLES*/
 		vector<particle> system    ,
@@ -62,16 +59,17 @@ int main(void){
 		 *	3. Se construye una grilla con cuadrículas de tamaño 1x1 y cada a una se le asigna un set.
 		 *	4. Cada set contiene los agentes que están en cada cuadrícula.
 		 */
-		vector<vector<set<size_t>>> box;
-		size_t num_boxes = floor(L);
+		vector<vector<set<size_t>>> grid;
+		size_t num_grid = floor(L);
+		
 		//Inicializamos los vectores declarados previamente:
 		inter.resize(N,false);
 		state_vector.resize(spin,0);
-		box.resize(num_boxes);
-		for (size_t i=0; i<box.size(); i++) box[i].resize(num_boxes);
+		grid.resize(num_grid);
+		for (size_t i=0; i<grid.size(); i++) grid[i].resize(num_grid);
 
 		/*CONDICIÓN INICIAL:no hay particulas interact.*/
-		init_system(system, state_vector, box);
+		init_system(system, state_vector, grid);
 		print_state(state_vector);
 
 		/*EVOLUCIÓN DEL SISTEMA*/
@@ -82,16 +80,13 @@ int main(void){
 			if (TimeStep % 100   == 0) print_epidemic_tofile(epidemic, state_vector, TimeStep);
 			if (TimeStep % 10000 == 0) printf("Time: %0.f\n", (double)TimeStep*delta_time );
 			TimeStep ++;
-			update_system(system, system_new, state_vector, box ,inter, TimeStep, anim);
+			update_system(system, system_new, state_vector, grid ,inter, TimeStep, anim);
 
 		}//while
 		updates += (float)TimeStep;
 
 		/*ESCRITURA DE RESULTADOS*/
-		cout << endl;
-		cout << "--------------------" << endl;
-		cout << "Experimento data:"    << endl;
-		cout << "--------------------" << endl;
+		print_result();
 		print_state(state_vector);
 		cout << endl;
 	}//for simul
