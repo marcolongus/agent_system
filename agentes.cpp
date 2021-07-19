@@ -84,7 +84,11 @@ int main(void){
 		updates += (float)TimeStep;
 
 		/*ESCRITURA DE RESULTADOS*/
-		print_result();
+		cout << endl;
+		cout << "--------------------" << endl;
+		cout << "Experimento data:"    << endl;
+		cout << "--------------------" << endl;
+
 		print_state(state_vector);
 		cout << endl;
 	}//for simul
