@@ -46,10 +46,17 @@ int main(void){
 		print_header(n_simulaciones);
 
 		/*DECLARACIÓN DE VARIABLES*/
-		vector<particle> system, system_new;
+		vector<particle> system, 
+						 system_new;
+		
 		vector<bool>     inter;        //Flag de interacción.
 		vector<size_t>   state_vector; //En cada lugar contiene la población de cada estado.
 		
+		//Iinicializamos inter y stat_verctor
+		inter.resize(N,false);
+		state_vector.resize(spin,0);
+
+
 		/*Estuctura de datos para optimizar la búsqueda de interacciones entre agentes:
 		 *	1. Utiliza un red-and-black tree implementado en c++ como set.
 		 *	2. Cada agente está indexado por un int que representa su posición en
@@ -60,20 +67,18 @@ int main(void){
 		vector<vector<set<size_t>>> grid;
 		size_t num_grid = floor(L);
 		
-		//Inicializamos los vectores declarados previamente:
-		inter.resize(N,false);
-		state_vector.resize(spin,0);
+		//Inicializamos grid
 		grid.resize(num_grid);
 		for (size_t i=0; i<grid.size(); i++) grid[i].resize(num_grid);
 
-		/*CONDICIÓN INICIAL:no hay particulas interact.*/
+		/*CONDICIÓN INICIAL:no hay particulas interact. Define el system.size() via pushback.*/
 		init_system(system, state_vector, grid);
+		system_new.resize(system.size());
+
 		print_state(state_vector);
 
 		/*EVOLUCIÓN DEL SISTEMA*/
 		int TimeStep   = 0; 
-		system_new.resize(system.size());
-		
 		while ((TimeStep < 50000) && (state_vector[1] > 0)){
 			if (TimeStep % 100   == 0) print_epidemic_tofile(epidemic, state_vector, TimeStep);
 			if (TimeStep % 10000 == 0) printf("Time: %0.f\n", (double)TimeStep*delta_time );
