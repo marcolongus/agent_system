@@ -78,7 +78,7 @@ int main(void){
 			if (TimeStep % 100   == 0) print_epidemic_tofile(epidemic, state_vector, TimeStep);
 			if (TimeStep % 10000 == 0) printf("Time: %0.f\n", (double)TimeStep*delta_time );
 			TimeStep ++;
-			update_system(system, system_new, state_vector, grid ,inter, TimeStep, anim);
+			update_system(system, system_new, state_vector, grid, inter, TimeStep, anim);
 
 		}//while
 		updates += (float)TimeStep;
