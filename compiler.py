@@ -2,7 +2,7 @@ import os
 from sys import argv
 from termcolor import colored,cprint
 import os
-os.system('color')
+#os.system('color'), no hace falta en linux
 
 #compilacion = "gcc -o agentes_test agentes.cpp -lstdc++ -O3 -march=native -fopenmp"
 compiler   = "gcc -o "
