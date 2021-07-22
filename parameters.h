@@ -1,6 +1,6 @@
 #pragma once
 
-#define KIND float  
+#define KIND double 
 
 //Parametros principales:
 const size_t N = 1000; //Cantidad de agentes.
