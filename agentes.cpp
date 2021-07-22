@@ -71,10 +71,11 @@ int main(void){
 		grid.resize(num_grid);
 		for (size_t i=0; i<grid.size(); i++) grid[i].resize(num_grid);
 
-		/*CONDICIÓN INICIAL:no hay particulas interact. Define el system.size() via pushback.*/
+		/*CONDICIÓN INICIAL:
+		 *i) No hay particulas interact. ii) Define el system.size() via pushback.
+		 */
 		init_system(system, state_vector, grid);
 		system_new.resize(system.size());
-
 		print_state(state_vector);
 
 		/*EVOLUCIÓN DEL SISTEMA*/
