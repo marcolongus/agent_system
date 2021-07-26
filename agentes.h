@@ -108,6 +108,7 @@ update_system(  vector<particle>            &system      ,
 
 
 
+
 //Print functiones
 
 void print_header(int n_simulaciones)
@@ -133,7 +134,7 @@ void print_mem_info(void)
 void print_epidemic_tofile(ofstream &file, vector<size_t> &state_vector, int &TimeStep)
 {
 	file << state_vector[0] << " ";
-        file << state_vector[1] << " ";
+	file << state_vector[1] << " ";
 	file << state_vector[2] << " ";
 	file << delta_time*(double)TimeStep << endl;
 }

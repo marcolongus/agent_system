@@ -184,6 +184,16 @@ bool interact(particle A, particle B){
 } //repensar esta función
 
 
+bool is_border(particle &agent)
+{
+	if (agent.x < 3)   return true;
+	if (agent.x > L-3) return true;
+	if (agent.y < 3)   return true;
+	if (agent.y > L-3) return true;
+	return false;
+}
+
+
 /*INTERACTION FUNCTIONS*/
 /* Evolution time step function of the particle */
 
@@ -191,6 +201,7 @@ bool interact(particle A, particle B){
 
 particle evolution(vector<particle> &system, vector<int> &index, bool inter){
 	particle Agent = system[index[0]];
+	bool border = is_border(Agent);
 	/* DINÁMICA ESPACIAL DEL SISTEMA*/
 	if (inter){
 		vector<KIND> field, potencial;
@@ -209,13 +220,31 @@ particle evolution(vector<particle> &system, vector<int> &index, bool inter){
     	field[0] = system[index[0]].velocity*cos(system[index[0]].angle) + potencial[0];
     	field[1] = system[index[0]].velocity*sin(system[index[0]].angle) + potencial[1];
 
-		Agent.x = b_condition(Agent.x + delta_time*field[0]);
-		Agent.y = b_condition(Agent.y + delta_time*field[1]);
-	}//if
+    	if (border)
+    	{
+			Agent.x = b_condition(Agent.x + delta_time*field[0]);
+			Agent.y = b_condition(Agent.y + delta_time*field[1]);
+    	}
+    	else
+    	{
+			Agent.x = Agent.x + delta_time*field[0];
+			Agent.y = Agent.y + delta_time*field[1];
+    	}
+	}//if intercat
+
     else{
-		Agent.x = b_condition(Agent.x + Agent.velocity*cos(Agent.angle)*delta_time);
-		Agent.y = b_condition(Agent.y + Agent.velocity*sin(Agent.angle)*delta_time);
-	}//else
+
+    	if (border)
+    	{
+			Agent.x = b_condition(Agent.x + Agent.velocity*cos(Agent.angle)*delta_time);
+			Agent.y = b_condition(Agent.y + Agent.velocity*sin(Agent.angle)*delta_time);
+    	}
+    	else
+    	{
+			Agent.x = Agent.x + Agent.velocity*cos(Agent.angle)*delta_time;
+			Agent.y = Agent.y + Agent.velocity*sin(Agent.angle)*delta_time;	
+    	}
+	}//else not interct.
 	/*El agente cambia de dirección en A.angle +/- pi/2*/
 	if (dis(gen) < p_rotation){
 		KIND ruido = (dis(gen)-0.5)*Pi;
