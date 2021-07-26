@@ -56,7 +56,6 @@ int main(void){
 		inter.resize(N,false);
 		state_vector.resize(spin,0);
 
-
 		/*Estuctura de datos para optimizar la búsqueda de interacciones entre agentes:
 		 *	1. Utiliza un red-and-black tree implementado en c++ como set.
 		 *	2. Cada agente está indexado por un int que representa su posición en
@@ -80,7 +79,8 @@ int main(void){
 
 		/*EVOLUCIÓN DEL SISTEMA*/
 		int TimeStep   = 0; 
-		while ((TimeStep < 50000) && (state_vector[1] > 0)){
+		while ((TimeStep < 50000) && (state_vector[1] > 0))
+		{
 			if (TimeStep % 100   == 0) print_epidemic_tofile(epidemic, state_vector, TimeStep);
 			if (TimeStep % 10000 == 0) printf("Time: %0.f\n", (double)TimeStep*delta_time );
 			TimeStep ++;
