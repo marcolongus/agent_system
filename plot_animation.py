@@ -10,8 +10,8 @@ import os
 colores = ['blue','red', 'green', ]
 archivo = "data/animacion.txt"
 
-N = 20
-L = 11
+N = 50
+L = 20
 
 ##############################################################################################
 #Animacion
@@ -44,7 +44,7 @@ def trayectoria(tpause = 0.01, animation = False):
 			circ = patches.Circle((x[j],y[j]), 1, alpha=0.7, fc= colores[estado[j]])
 			ax.add_patch(circ)
 
-		plt.savefig("video/pic%.4i.png" %(i),dpi=70)
+		plt.savefig("video/pic%.4i.png" %(i),dpi=30)
 		#plt.pause(tpause)
 
 	if animation:
