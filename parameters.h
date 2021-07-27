@@ -3,8 +3,8 @@
 #define KIND float  
 
 //Parametros principales:
-const size_t N = 50; //Cantidad de agentes.
-const KIND   L = 20; //Largo del sistema. Area = L*L.
+const size_t N = 1000; //Cantidad de agentes.
+const KIND   L = 150; //Largo del sistema. Area = L*L.
 
 //Parametros de evolución del sistema.
 //Pre-condición para estos parámetros (dt*v<0.1):
@@ -21,7 +21,7 @@ const KIND   p_init  = 0.1, //Infectadas iniciales.
 
 const int spin = 3; //Estados internos.
 
-const bool animation = true;
+const bool animation = false;
 const int  anim_step = 5;
 
 /*Tiempos característicos y probabilidades por unidad de tiempo*/
