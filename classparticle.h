@@ -2,8 +2,8 @@
 using namespace std;
 
 //Generador de números aleatorios en (0,1).
-mt19937::result_type seed = 1615996332;
-mt19937 gen(seed);                             //Standard mersenne_twister_engine seeded time(0)
+ranlux24::result_type seed = 1615996332;
+ranlux24 gen(seed);                             //Standard mersenne_twister_engine seeded time(0)
 uniform_real_distribution<KIND> dis(0., 1.); // dis(gen), número aleatorio real entre 0 y 1.
 
 /*Definimos la clase partículas y sus métodos */
