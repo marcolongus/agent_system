@@ -1,17 +1,20 @@
 import os
 from sys import argv
+from termcolor import colored,cprint
+import os
+#os.system('color'), no hace falta en linux
 
 #compilacion = "gcc -o agentes_test agentes.cpp -lstdc++ -O3 -march=native -fopenmp"
 compiler   = "gcc -o "
 target     = "agentes_test "
 program    = "agentes.cpp "
-flags      = "-lstdc++ " # -Wall " #-Werrors
-opt_flags  = "-O3 -march=native -fopenmp"
+flags      = "-lstdc++ -lm " # -Wall " #-Werrors
+opt_flags  = "-O3 -march=native -fopenmp "
 
 compilacion =compiler + target + program + flags + opt_flags
-print(compilacion)
+cprint(compilacion, 'green')
 
-flush = "del "+"agentes_test.exe"
+flush = "rm "+"agentes_test"
 
 os.system("%s" %compilacion)
 try:
